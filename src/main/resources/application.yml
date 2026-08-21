@@ -18,7 +18,7 @@ spring:
 
 gateway:
   security:
-    jwt-secret: ${JWT_SECRET:super-secure-default-secret-key-that-is-very-long-for-safety}
+    jwt-secret: ${JWT_SECRET}
   limits:
     max-tokens: 100.0
     refill-rate-per-second: 1.666
