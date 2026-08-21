@@ -17,7 +17,7 @@
 	<description>API Gateway for Spiritual Organisation</description>
 
 	<properties>
-		<java.version>25</java.version> <!-- Aligns perfectly with your Java 26 SDK -->
+		<java.version>21</java.version> 
 	</properties>
 
 	<dependencies>
