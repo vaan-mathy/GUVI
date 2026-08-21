@@ -21,8 +21,9 @@ WORKDIR /app
 # Copy the compiled executable binary from Stage 1 safely
 COPY --from=builder /app/target/mel-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose the correct network routing communications gateway port
+# Expose the correct network routing communications gateway port (documentation only;
+# actual bound port is controlled at runtime by the PORT env var, see application.yml)
 EXPOSE 8081
 
 # Optimize JVM flag settings for tight cloud environments (prevents RAM leaks)
-ENTRYPOINT ["java", "-XX:+UseG1GC", "-XX:MaxRAMPercentage=75.0", "-jar", "app.jar", "--server.port=8081"]
+ENTRYPOINT ["java", "-XX:+UseG1GC", "-XX:MaxRAMPercentage=75.0", "-jar", "app.jar"]
