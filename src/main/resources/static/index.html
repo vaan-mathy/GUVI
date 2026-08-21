@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mel Portal - Spiritual Member Gateway</title>
+    <!-- Tailwind CSS Engine for a clean, minimalist spiritual UI theme -->
+    <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-stone-50 font-sans text-stone-800 min-h-screen flex flex-col justify-between">
+
+    <!-- Header Navigation -->
+    <header class="bg-white shadow-sm border-b border-stone-200 py-4 px-6">
+        <div class="max-w-5xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-full bg-amber-600 flex items-center justify-center text-white font-bold text-sm">H</div>
+                <span class="text-xl font-semibold tracking-wide text-stone-900">MEL PORTAL</span>
+            </div>
+            <span class="text-xs uppercase bg-stone-100 text-stone-600 px-3 py-1 rounded-full font-medium tracking-widest border border-stone-200">Gateway Dashboard</span>
+        </div>
+    </header>
+
+    <!-- Main Content Body -->
+    <main class="max-w-4xl mx-auto p-6 w-full flex-grow grid grid-cols-1 md:grid-cols-3 gap-6 my-6">
+        
+        <!-- Left Column: Authentication Controls -->
+        <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm md:col-span-1 h-fit">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-stone-500 mb-4">Member Identity</h2>
+            <div class="space-y-4">
+                <div>
+                    <label for="memberId" class="block text-xs font-semibold text-stone-600 uppercase mb-1">Enter Spiritual ID</label>
+                    <input type="text" id="memberId" value="HUE-MEMBER-777" 
+                           class="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 font-mono text-sm" placeholder="e.g. HUE-MEMBER-123">
+                </div>
+                <p class="text-xs text-stone-500 leading-relaxed">
+                    Changing this ID mimics opening the software from a completely separate user profile or device.
+                </p>
+            </div>
+        </div>
+
+        <!-- Right Column: API Gateway Simulation Control Panel -->
+        <div class="bg-white p-6 rounded-xl border border-stone-200 shadow-sm md:col-span-2 flex flex-col justify-between">
+            <div>
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h2 class="text-sm font-bold uppercase tracking-wider text-stone-500">Resource Gateway Engine</h2>
+                        <p class="text-xs text-stone-400 mt-0.5">Target: <code class="bg-stone-100 px-1 py-0.5 rounded text-stone-600 font-mono">/api/v1/meditation/session</code></p>
+                    </div>
+                    <button id="sendRequestBtn" onclick="fireGatewayRequest()" 
+                            class="bg-amber-700 hover:bg-amber-800 text-white font-medium text-sm px-5 py-2.5 rounded-lg shadow transition-colors duration-200">
+                        Trigger API Request
+                    </button>
+                </div>
+
+                <!-- API Response Metrics Board -->
+                <div class="grid grid-cols-2 gap-4 my-4">
+                    <div class="bg-stone-50 border border-stone-200 p-3 rounded-lg">
+                        <span class="block text-[10px] uppercase font-bold text-stone-400 tracking-wider">HTTP Status</span>
+                        <span id="httpStatusText" class="text-lg font-mono font-bold text-stone-400">---</span>
+                    </div>
+                    <div class="bg-stone-50 border border-stone-200 p-3 rounded-lg">
+                        <span class="block text-[10px] uppercase font-bold text-stone-400 tracking-wider">Gateway Action</span>
+                        <span id="gatewayActionText" class="text-xs font-semibold block mt-1 text-stone-500">Awaiting Trigger</span>
+                    </div>
+                </div>
+
+                <!-- Live Raw JSON Payload Output Screen -->
+                <div class="mt-4">
+                    <span class="block text-xs font-semibold text-stone-600 uppercase mb-1">Returned System Payload</span>
+                    <pre id="jsonOutput" class="bg-stone-900 text-amber-400 p-4 rounded-lg font-mono text-xs overflow-x-auto min-h-[140px] max-h-[220px]">{}</pre>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Space -->
+    <footer class="bg-stone-900 text-stone-400 text-center py-4 border-t border-stone-800">
+        <p class="text-xs tracking-wide">Mel Software Architecture Framework &copy; 2026. Built for High Performance.</p>
+    </footer>
+
+    <!-- Interactive Logic Script Operations -->
+    <script>
+        async function fireGatewayRequest() {
+            const memberIdInput = document.getElementById('memberId').value.trim();
+            const jsonOutput = document.getElementById('jsonOutput');
+            const statusText = document.getElementById('httpStatusText');
+            const actionText = document.getElementById('gatewayActionText');
+
+            // Visual UI cleanup reset state before triggering the fetch pipeline
+            jsonOutput.textContent = "Processing network routing...";
+            statusText.className = "text-lg font-mono font-bold text-stone-400";
+            
+            // Auto-detect backend host path location (handles localhost or cloud environment servers dynamically)
+            const rootHost = window.location.origin;
+
+            try {
+                const response = await fetch(`${rootHost}/api/v1/meditation/session`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Member-Token': memberIdInput,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+                statusText.textContent = response.status;
+                jsonOutput.textContent = JSON.stringify(data, null, 4);
+
+                if (response.status === 200) {
+                    statusText.classList.add('text-green-600');
+                    actionText.textContent = "🟢 ALLOWED: Token verified and bucket balance deducted.";
+                    actionText.className = "text-xs font-semibold text-green-600 block mt-1";
+                } else if (response.status === 429) {
+                    statusText.classList.add('text-red-500');
+                    actionText.textContent = "🔴 BLOCKED: Rate Limiter triggered! Bucket empty.";
+                    actionText.className = "text-xs font-semibold text-red-500 block mt-1";
+                } else if (response.status === 401) {
+                    statusText.classList.add('text-amber-500');
+                    actionText.textContent = "🟡 DENIED: Missing or bad authorization identity token.";
+                    actionText.className = "text-xs font-semibold text-amber-500 block mt-1";
+                }
+
+            } catch (error) {
+                statusText.textContent = "ERR";
+                statusText.classList.add('text-red-700');
+                actionText.textContent = "💥 Network down. Check database link connections.";
+                actionText.className = "text-xs font-semibold text-red-700 block mt-1";
+                jsonOutput.textContent = JSON.stringify({ error: "Connection Failed", message: error.message }, null, 4);
+            }
+        }
+    </script>
+</body>
+</html>
