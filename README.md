@@ -111,4 +111,4 @@ curl -X GET https://railway.app
 ---
 
 ## 6. Deployment URL (Very Important)
-* **Live Production Application Gateway UI Location Link:** https://railway.app
+* **Live Production Application Gateway UI Location Link:** [https://railway.app](https://guvi-production-5912.up.railway.app/)
