@@ -31,7 +31,7 @@ Mel Portal is a high-performance backend infrastructure microservice designed ex
 2. **Configure Local Environment variables:**
    Wrap your MongoDB cloud access credentials inside single quotes to prevent PowerShell parsing drive conflicts:
    ```powershell
-   \$env:MONGO_URI = 'mongodb+srv://yourUsername:yourSafePassword@hue.cluster.mongodb.net/mel_db?retryWrites=true&w=majority'
+   \$env:SPRING_DATA_MONGODB_URI = 'mongodb+srv://yourUsername:yourSafePassword@hue.cluster.mongodb.net/mel_db?retryWrites=true&w=majority'
    ```
 
 3. **Clean Cache and Compile Binary Assets:**
