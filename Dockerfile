@@ -26,4 +26,4 @@ COPY --from=builder /app/target/mel-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8081
 
 # Optimize JVM flag settings for tight cloud environments (prevents RAM leaks)
-ENTRYPOINT java -XX:+UseG1GC -XX:MaxRAMPercentage=75.0 -Dspring.data.mongodb.uri=${SPRING_DATA_MONGODB_URI} -jar app.jar --server.port=${PORT:8081}
+ENTRYPOINT ["sh", "-c", "java -XX:+UseG1GC -XX:MaxRAMPercentage=75.0 -Dspring.data.mongodb.uri=${SPRING_DATA_MONGODB_URI} -jar app.jar --server.port=${PORT:-8081}"]
